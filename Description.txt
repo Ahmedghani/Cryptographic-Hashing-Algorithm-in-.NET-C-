@@ -1,0 +1,89 @@
+Cryptographic Hashing Algorithm in .NET C#
+The idea of hashing is to generate a fixed size string from the give input data. That will be encoded ie, It can not be read. .Net has various hashing algorithms MD5, SHA1, SHA2 and SHA3 are derived from a single class called HashAlgorithm.
+
+Hashing can be used in two different ways. With and without using Secret key. Hashing without secret key is called HMAC (Hash-based Message Authentication Code).
+
+Hashing is one way operation. Once a data is hashed we cannot reverse and get the original message. But encryption is two way. Once a messages is encrypted using a key we can reverese it using the same key. This hashing technique is widely used to check the data integrity. Usefull to check the transfered data is corrupted or not.
+
+
+
+
+From the above image, Person 1 sends a message and its hash to Person 2. Person 2 receives both and compute the hash for the received message and compare with the received hash. If both are equal means the file is not corrupted or not attacked by the viruses. So we can confirm that we got the complete file bytes.
+
+Even a small change in the message will result in a mostly different hash, due to the avalanche effect. For example, adding a period to the end of the sentence changes some bits in the hash.
+
+In the forthcoming samples I have used two messages to hash. Both having just slight difference that one doesn't have full stop (dot) at the end. But still the generated hash will be completely new one.
+
+Two types of hashing method is used mostly. They are,
+MD5
+SHA (Secure Hash Algorithm)
+
+
+MD5
+
+MD5 was designed by Ronald Rivest in 1991. It produces a 160-bit hash value. First flaw found in 1996. So the recommendation was to move over to the Secure Hash Family (SHA).
+
+SHA
+
+Secure Hash Algorithm is published by National Institute of Standards and Technology (NIST) in USA. It has three different varients.
+SHA1
+SHA2
+SHA3
+SHA-1
+
+A 160-bit hash function which resembles the earlier MD5 algorithm. This was designed by the National Security Agency (NSA) to be part of the Digital Signature Algorithm. Cryptographic weaknesses were discovered in SHA-1, and the standard was no longer approved for most cryptographic uses after 2010.
+
+SHA-2
+
+It has two different varients.
+SHA 256
+SHA 512
+SHA 256 produces a 256-bit hash computed with 32-bit words and the SHA 512 produces a 512-bit hash computed with 64-bit words. This is also designed by NSA. Both are works the same way than SHA1 but are stronger and generate a longer hash based on its bits.
+
+SHA-3
+
+It was designed after a public competition among non-NSA designers and released by NIST on 2015. SHA-3 is not meant to replace SHA-2, as no significant attack on SHA-2 has been demonstrated. SHA-3 is not commonly supported in .NET directly but 3rd party implementations are available. Implementation of SHA 256 and SHA 512 is straight forward in .NET as the SHA class is identical to MD5.
+
+SHA-512 Sample
+using System;
+using System.Security.Cryptography;
+static void Main()
+{
+    const string message1 = "The quick brown fox jumps over the lazy dog";
+    const string message2 = "The quick brown fox jumps over the lazy dog.";
+ 
+    Console.WriteLine("Original Message 1 : " + message1);
+    Console.WriteLine("Original Message 2 : " + message2);
+    Console.WriteLine();
+ 
+    var md5HashedMessage = ComputeHashCode(Encoding.UTF8.GetBytes(message1));
+    var md5HashedMessage2 = ComputeHashCode(Encoding.UTF8.GetBytes(message2));
+ 
+    Console.WriteLine();
+    Console.WriteLine("SHA-512 Hash");
+    Console.WriteLine();
+    Console.WriteLine("Hashed Message 1 :  " + Convert.ToBase64String(md5HashedMessage));
+    Console.WriteLine("Hashed Message 2 :  " + Convert.ToBase64String(md5HashedMessage2));
+    Console.ReadLine();
+}
+public static byte[] ComputeHashCode(byte[] toBeHashed)
+{
+    using (var md5 = SHA512.Create())
+    {
+        return md5.ComputeHash(toBeHashed);
+    }
+}
+ 
+
+
+The same way we can generate the hash of MD5, SHA1 and SHA-256 just by replacing its corresponding methods MD5.Create(), SHA1.Create() and SHA256.Create() in the above code sample.
+
+HMAC
+
+Combining one way Hash function with secret Cryptographic key is called HMAC. I have explained it with sample code in my another post Cryptographic Hash-based Message Authentication Code (HMAC) in .NET
+
+Hashing Advantages
+Easy to compute the hash value for any given message
+Not possible to generate a message from the given hash
+Not possible to modify a message without changing the hash
+Not possible to find two different messages with the same hash

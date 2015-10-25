@@ -1,0 +1,6 @@
+C:\Users\GHANI\Documents\Visual Studio 2013\CrypText\CrypText\bin\Debug\CrypText.exe.config
+C:\Users\GHANI\Documents\Visual Studio 2013\CrypText\CrypText\bin\Debug\CrypText.exe
+C:\Users\GHANI\Documents\Visual Studio 2013\CrypText\CrypText\bin\Debug\CrypText.pdb
+C:\Users\GHANI\Documents\Visual Studio 2013\CrypText\CrypText\obj\Debug\CrypText.csprojResolveAssemblyReference.cache
+C:\Users\GHANI\Documents\Visual Studio 2013\CrypText\CrypText\obj\Debug\CrypText.exe
+C:\Users\GHANI\Documents\Visual Studio 2013\CrypText\CrypText\obj\Debug\CrypText.pdb
